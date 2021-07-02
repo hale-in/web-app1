@@ -32,6 +32,7 @@ while True:
     value = line[start+1:]
     env_list[key] = value
 
+SECRET_KEY = env_list['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
