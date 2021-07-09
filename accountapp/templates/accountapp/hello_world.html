@@ -4,6 +4,15 @@
 
     <div style="margin: 2rem; text-align: center">
         <h1>TEST</h1>
+
+        <form action="/accountapp/hello_world/" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-outline-info rounded-pill px-4">
+
+
+        </form>
+
+
         <h3> {{ text }}</h3>
 
     </div>
