@@ -7,11 +7,11 @@
             <h4>Sign up</h4>
         </div>
         <div>
-            <form action="{% url 'accountapp:create' %}" method="post"> #action요청보낼경로
+            <form action="{% url 'accountapp:create' %}" method="post">
                 {% csrf_token %}
-                {{ form }} #단순출력
+                {{ form }}
                 <div class="m-5">
-                    <input type="submit" class="btn btn-dark rounded-pill px-5"> #버튼만들기
+                    <input type="submit" class="btn btn-dark rounded-pill px-5">
                 </div>
 
             </form>
