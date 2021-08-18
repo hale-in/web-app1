@@ -9,8 +9,9 @@
             </a>
         </span>
         <span>
-            <a href="{% url 'projectapp:list' %}"
-               Projects
+            <a href="{% url 'projectapp:list' %}">
+                Projects
+            </a>
         </span>
         {% if not user.is_authenticated %}
         <span>
