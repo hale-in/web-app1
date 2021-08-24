@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -16,21 +17,23 @@ class LikeArticleView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        article = Article.objects.get(pk=kwargs['article.pk'])
+        article = Article.objects.get(pk=kwargs['article_pk'])
 
         like_record = LikeRecord.objects.filter(user=user, article=article)
 
         if like_record.exists():
-            return HttpResponseRedirect(reverse('articleapp:detail', kwargs={'pk': kwargs['article.pk']}))
+            messages.add_message(request, messages.ERROR, 'only LIKE once')
+            return HttpResponseRedirect(reverse('articleapp:detail', kwargs={'pk': kwargs['article_pk']}))
         else:
             LikeRecord(user=user, article=article).save()
 
         article.like += 1
         article.save()
+        messages.add_message(request, messages.SUCCESS, 'You LIKE this')
 
 
         return super().get(request, *args, **kwargs)
 
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse('articleapp:detail', kwargs={'pk': kwargs['article.pk']})
+        return reverse('articleapp:detail', kwargs={'pk': kwargs['article_pk']})
