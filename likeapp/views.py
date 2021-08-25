@@ -1,5 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -12,6 +14,20 @@ from articleapp.models import Article
 from likeapp.models import LikeRecord
 
 
+@transaction.atomic()
+def db_transaction(user, article):
+    article.like += 1
+    article.save()
+
+    like_record = LikeRecord.objects.filter(user=user, article=article)
+
+    if like_record.exists():
+        raise ValidationError('Like already exists')
+    else:
+        LikeRecord(user=user, article=article).save()
+
+
+
 @method_decorator(login_required, 'get')
 class LikeArticleView(RedirectView):
 
@@ -19,18 +35,13 @@ class LikeArticleView(RedirectView):
         user = request.user
         article = Article.objects.get(pk=kwargs['article_pk'])
 
-        like_record = LikeRecord.objects.filter(user=user, article=article)
+        try:
+            db_transaction(user, article)
+            messages.add_message(request, messages.SUCCESS, 'You LIKE this')
 
-        if like_record.exists():
+        except ValidationError:
             messages.add_message(request, messages.ERROR, 'only LIKE once')
             return HttpResponseRedirect(reverse('articleapp:detail', kwargs={'pk': kwargs['article_pk']}))
-        else:
-            LikeRecord(user=user, article=article).save()
-
-        article.like += 1
-        article.save()
-        messages.add_message(request, messages.SUCCESS, 'You LIKE this')
-
 
         return super().get(request, *args, **kwargs)
 

@@ -64,7 +64,8 @@ INSTALLED_APPS = [
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'info',
+    messages.SUCCESS: 'info',
+    messages.ERROR: 'danger',
 }
 
 MIDDLEWARE = [
