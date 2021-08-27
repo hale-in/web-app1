@@ -14,13 +14,6 @@ from profileapp.forms import ProfileCreationForm
 from profileapp.models import Profile
 
 
-class ProfileCreateview(CreateView):
-    model = Profile
-    form_class = ProfileCreationForm
-    success_url = reverse_lazy('accountapp:hello_world')
-    template_name = 'profileapp/create.html'
-
-
 @method_decorator(login_required, 'get')
 @method_decorator(login_required, 'post')
 class ProfileCreateview(CreateView):
