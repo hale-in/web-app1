@@ -15,7 +15,7 @@ services:
       - soon_media:/data/media/
 
   django:
-    image: taketae_django:5
+    image: soon_django:5
     networks:
       - soon_network
     volumes:
