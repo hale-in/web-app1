@@ -10,7 +10,7 @@ services:
     networks:
       - soon_network
     volumes:
-      - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
+      - /home/breathin_x/nginx.conf:/etc/nginx/nginx.conf
       - soon_static:/data/static/
       - soon_media:/data/media/
 
@@ -19,8 +19,8 @@ services:
     networks:
       - soon_network
     volumes:
-      - soon_static:/home/web-app2/staticfiles
-      - soon_media:/home/web-app2/media
+      - soon_static:/home/web-app1/staticfiles
+      - soon_media:/home/web-app1/media
     secrets:
       - django_secret_key
       - MARIADB_USER
