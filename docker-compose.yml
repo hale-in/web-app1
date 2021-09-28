@@ -19,8 +19,8 @@ services:
     networks:
       - soon_network
     volumes:
-      - soon_static:/home/web-app1/staticfiles
-      - soon_media:/home/web-app1/media
+      - soon_static:/home/web-app1/staticfiles/
+      - soon_media:/home/web-app1/media/
     secrets:
       - django_secret_key
       - MARIADB_USER
