@@ -2,7 +2,7 @@ FROM python:3.9.0
 
 WORKDIR /home/
 
-RUN echo 'chunsoccute'
+RUN echo 'chuniscute'
 
 RUN git clone https://github.com/hale-in/web-app1.git
 
