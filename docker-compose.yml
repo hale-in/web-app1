@@ -6,13 +6,25 @@ services:
   nginx:
     image: nginx:1.19.5
     ports:
-      - 80:80
+      - mode: host
+        protocol: tcp
+        target: 80
+        published: 80
     networks:
       - soon_network
     volumes:
       - /home/breathin_x/nginx.conf:/etc/nginx/nginx.conf
       - soon_static:/data/static/
       - soon_media:/data/media/
+      - soon_log:/var/log/nginx/
+
+  goaccess:
+    image: allinurl/goaccess:1.5.1
+    volumes:
+      - soon_log:/var/log/nginx/
+    ports:
+      - 7890:7890
+    command: /var/log/nginx/soon_access.log -o /var/log/nginx/report.html --log-format COMBINED --real-time-html
 
   django:
     image: soon_django:5
@@ -49,6 +61,7 @@ volumes:
   soon_static:
   soon_media:
   soon_maria:
+  soon_log:
 
 secrets:
   django_secret_key:
